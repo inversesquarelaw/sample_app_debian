@@ -8,6 +8,10 @@ group :assets do
   gem 'uglifier'
 end 
 
+group :production do
+  gem 'pg', '0.16.0'
+end
+
 group :development do
   gem 'rspec-rails', '2.14.0'
   gem 'annotate', '2.4.0'
