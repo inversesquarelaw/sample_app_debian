@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :authenticate, :only => [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -37,4 +38,12 @@ class UsersController < ApplicationController
     end
   end
 
-end
+  private
+
+    def authenticate
+      deny_access unless signed_in?
+      #deny_access is located in sessions_helper file
+    end
+
+
+end #all
