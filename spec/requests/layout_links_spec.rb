@@ -80,5 +80,11 @@ describe "LayoutLinks" do
                                     #:content => "Settings")
     #end
 
+    it "should have a users link" #do
+      #visit root_path
+      #response.should have_selector("a", :href => user_path(@user),
+                                    #:content => "Settings")
+    #end
+
   end #signed in
 end #all
