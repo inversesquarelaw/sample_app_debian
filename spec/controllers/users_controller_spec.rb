@@ -61,7 +61,7 @@ describe UsersController do
                                           :content => "delete")
       end
     end 
-  end
+  end #GET index
 
   describe "GET 'show'" do
     before(:each) do 
@@ -98,7 +98,27 @@ describe UsersController do
       response.should have_selector(
         'td>a', :content => user_path(@user), :href => user_path(@user))
     end
-  end
+    it "should the user's microposts"do
+      mp1 = Factory(:micropost, :user => @user, :content => "Foo bar")
+      mp2 = Factory(:micropost, :user => @user, :content => "Bar foo")
+      get :show, :id => @user
+      response.should have_selector('span.content', :content => mp1.content)
+      response.should have_selector('span.content', :content => mp2.content)
+    end
+
+    it "should paginate microposts" do
+      35.times {Factory(:micropost, :user => @user, :content => "foo")}
+      get :show, :id => @user
+      response.should have_selector('div.pagination')
+    end
+
+    it "should display the microposts count" do
+      10.times {Factory(:micropost, :user => @user, :content => "foo")}
+      get :show, :id => @user
+      response.should have_selector('td.sidebar', 
+                                    :content => @user.microposts.count.to_s)
+    end
+  end #GET show
 
   describe "GET 'new'" do
     it "returns http success" do
@@ -110,7 +130,7 @@ describe UsersController do
       get :new
       response.should have_selector('title', :content => "Sign up")
     end
-  end
+  end #GET new
 
   describe "POST 'create'" do
     describe "failure" do
