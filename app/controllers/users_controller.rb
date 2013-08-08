@@ -8,6 +8,10 @@ class UsersController < ApplicationController
     @title = "All users"
   end
 
+  def edit
+    @title = "Edit user"
+  end
+
   def show
     @user = User.find(params[:id])
     @title = @user.name
@@ -30,10 +34,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    @title = "Edit user"
-  end
-
   def update
     if @user.update_attributes(params[:user])
       redirect_to @user, :flash => {:success => "Profile updated."}
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    @user.destroy
     redirect_to users_path, :flash => {:success => "User destroyed."}
   end
 
@@ -61,8 +61,8 @@ class UsersController < ApplicationController
     end
 
     def admin_user
-      user = User.find(params[:id])
-      redirect_to(root_path) if (!current_user.admin? || current_user?(user))
+      @user = User.find(params[:id])
+      redirect_to(root_path) if (!current_user.admin? || current_user?(@user))
     end
 
 end #all

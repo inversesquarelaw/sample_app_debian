@@ -4,7 +4,6 @@ module UsersHelper
       user.email.downcase, 
       :alt => user.name,
       :class => 'gravatar', 
-      :gravatar => options
-    )
+      :gravatar => options)
   end
 end
