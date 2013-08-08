@@ -55,4 +55,11 @@ end
 Spork.each_run do
   # This code will be run each time you run your specs.
   SampleAppDebian::Application.reload_routes!
+
+  #clears test db data before each spork run automatically.
+  ActiveRecord::Schema.verbose = false
+  silence_stream STDOUT do
+    load Rails.root.join('db', 'schema.rb') # use db agnostic schema by default
+    load Rails.root.join('db', 'seeds.rb')
+  end
 end
