@@ -23,7 +23,7 @@ describe UsersController do
 
       it "should be successful" do
         get :index
-        response.should be_successful
+        response.should be_success
       end
       it "should have the right title" do
         get :index
@@ -98,7 +98,7 @@ describe UsersController do
       response.should have_selector(
         'td>a', :content => user_path(@user), :href => user_path(@user))
     end
-    it "should the user's microposts"do
+    it "should the user's microposts" do
       mp1 = Factory(:micropost, :user => @user, :content => "Foo bar")
       mp2 = Factory(:micropost, :user => @user, :content => "Bar foo")
       get :show, :id => @user
